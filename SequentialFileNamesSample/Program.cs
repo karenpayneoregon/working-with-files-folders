@@ -1,6 +1,13 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using DirectoryHelpersLibrary.Classes;
+using SequentialFileNamesSample.Classes;
 using Spectre.Console;
+using DateOnlyConverter = DirectoryHelpersLibrary.Classes.DateOnlyConverter;
+using TimeOnlyConverter = DirectoryHelpersLibrary.Classes.TimeOnlyConverter;
+
 
 namespace SequentialFileNamesSample
 {
@@ -9,19 +16,41 @@ namespace SequentialFileNamesSample
         static void Main(string[] args)
         {
 
-            // if there are any files show the last one created
-            if (GenerateFiles.HasAnyFiles())
+            //if (GenerateFiles.HasAnyFiles())
+            //{
+            //    AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
+            //}
+
+            //AnsiConsole.MarkupLine("[white on blue]Create file[/]");
+            //var (success, fileName) = GenerateFiles.CreateTextFile();
+            //if (success)
+            //{
+            //    File.WriteAllLines(fileName, new []{"Hello"});
+            //}
+            //else
+            //{
+            //    AnsiConsole.MarkupLine($"[red]Failed to write to[/] {fileName}");
+            //}
+
+            //AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
+            JsonSerializerOptions JsonSerializerOptions()
             {
-                AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
+                JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.General);
+
+                jsonSerializerOptions.Converters.Add(new DateOnlyConverter());
+                jsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
+                jsonSerializerOptions.WriteIndented = true;
+
+                return jsonSerializerOptions;
+
             }
+            JsonSerializerOptions options = JsonSerializerOptions();
+            foreach (var person in MockedData.PeopleMocked())
+            {
+                var (success, fileName) = GenerateFiles.CreateFile();
+                File.WriteAllText(fileName, JsonSerializer.Serialize(person, options));
 
-            AnsiConsole.MarkupLine("[white on blue]Create 1 file[/]");
-            GenerateFiles.Create();
-            AnsiConsole.MarkupLine("[white on blue]Create 4 files[/]");
-            GenerateFiles.Create(4);
-
-            // get last file
-            AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
+            }
 
             Console.ReadLine();
         }

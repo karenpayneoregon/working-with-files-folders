@@ -13,7 +13,8 @@ namespace DirectoryHelpersLibrary.Classes
         /// <summary>
         /// Base file name together with <see cref="_pattern"/>
         /// </summary>
-        private static string _baseFileName => "Log";
+        private static string _baseFileName => "Data";
+        private static string _baseExtension => "json";
         /// <summary>
         /// Wrapper for <seealso cref="NextAvailableFilename"/> to obtain next available file name in a specific folder
         /// </summary>
@@ -22,7 +23,7 @@ namespace DirectoryHelpersLibrary.Classes
         /// Path is set to main assembly location with a base name of Import.txt
         /// </remarks>
         public static string NextFileName()
-            => NextAvailableFilename(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{_baseFileName}.txt"));
+            => NextAvailableFilename(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{_baseFileName}.{_baseExtension}"));
 
         /// <summary>
         /// Wrapper for <see cref="GetNextFilename"/>
@@ -88,19 +89,18 @@ namespace DirectoryHelpersLibrary.Classes
 
             return string.Format(pattern, max);
         }
-        public static void Create(int count = 1)
+        public static (bool success, string fileName) CreateFile()
         {
-            for (int index = 0; index < count; index++)
+            try
             {
-                File.WriteAllText(GenerateFiles.NextFileName(), "");
+                var fileName = GenerateFiles.NextFileName();
+                File.WriteAllText(fileName, "");
+                return (true, fileName);
             }
-
-            Directory.GetFiles(".", "*.txt")
-                .ToList()
-                .Select(item => new { FileName = Path.GetFileName(item), Index = item.SqueezeInt() })
-                .OrderBy(anonymous => anonymous.Index)
-                .ToList()
-                .ForEach(x => Console.WriteLine(x.FileName));
+            catch (Exception)
+            {
+                return (false, null);
+            }
         }
         /// <summary>
         /// Strip characters from string
@@ -113,9 +113,9 @@ namespace DirectoryHelpersLibrary.Classes
         /// <summary>
         /// Get all log files
         /// </summary>
-        private static string[] LogFiles
+        private static string[] Files
             => Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory,
-                $"{_baseFileName}*.txt");
+                $"{_baseFileName}*._baseExtension");
 
         /// <summary>
         /// Get last log file by int value
@@ -123,7 +123,7 @@ namespace DirectoryHelpersLibrary.Classes
         /// <returns>Last log file</returns>
         public static string? GetLast()
         {
-            var result = LogFiles
+            var result = Files
                 .Select(file => new
                 {
                     Name = file,
@@ -137,7 +137,7 @@ namespace DirectoryHelpersLibrary.Classes
         /// Determine if there are any files
         /// </summary>
         /// <returns></returns>
-        public static bool HasAnyFiles() => LogFiles.Length > 0;
+        public static bool HasAnyFiles() => Files.Length > 0;
 
         /// <summary>
         /// Remove all files
@@ -146,7 +146,7 @@ namespace DirectoryHelpersLibrary.Classes
         {
             if (!HasAnyFiles()) return;
 
-            foreach (var file in LogFiles)
+            foreach (var file in Files)
             {
                 File.Delete(file);
             }
