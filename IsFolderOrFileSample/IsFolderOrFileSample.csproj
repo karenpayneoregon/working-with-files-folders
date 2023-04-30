@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<Target Name="MakeMyDir" AfterTargets="Build">
+		<MakeDir Directories="$(OutDir)LogFiles" />
+	</Target>
+	<ItemGroup>
+	  <None Remove="readme.md" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="readme.md" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="TextFile1.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ConsoleHelperLibrary" Version="1.0.0" />
+		<PackageReference Include="Spectre.Console" Version="0.44.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\HelperLibrary\HelperLibrary.csproj" />
+	</ItemGroup>
+</Project>
