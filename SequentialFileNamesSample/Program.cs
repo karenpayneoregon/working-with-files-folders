@@ -11,47 +11,42 @@ using TimeOnlyConverter = DirectoryHelpersLibrary.Classes.TimeOnlyConverter;
 
 namespace SequentialFileNamesSample
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
 
-            //if (GenerateFiles.HasAnyFiles())
-            //{
-            //    AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
-            //}
-
-            //AnsiConsole.MarkupLine("[white on blue]Create file[/]");
-            //var (success, fileName) = GenerateFiles.CreateTextFile();
-            //if (success)
-            //{
-            //    File.WriteAllLines(fileName, new []{"Hello"});
-            //}
-            //else
-            //{
-            //    AnsiConsole.MarkupLine($"[red]Failed to write to[/] {fileName}");
-            //}
-
-            //AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
-            JsonSerializerOptions JsonSerializerOptions()
+            if (GenerateFiles.HasAnyFiles())
             {
-                JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.General);
-
-                jsonSerializerOptions.Converters.Add(new DateOnlyConverter());
-                jsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
-                jsonSerializerOptions.WriteIndented = true;
-
-                return jsonSerializerOptions;
-
+                AnsiConsole.MarkupLine($"Last file [cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
             }
+            else
+            {
+                AnsiConsole.MarkupLine("[cyan]No files yet[/]");
+            }
+
             JsonSerializerOptions options = JsonSerializerOptions();
+            AnsiConsole.MarkupLine("[white on blue]Create files[/]");
             foreach (var person in MockedData.PeopleMocked())
             {
                 var (success, fileName) = GenerateFiles.CreateFile();
-                File.WriteAllText(fileName, JsonSerializer.Serialize(person, options));
+                if (success)
+                {
+                    AnsiConsole.MarkupLine($"   [white]{Path.GetFileName(fileName)}[/]");
+                    File.WriteAllText(fileName, JsonSerializer.Serialize(person, options));
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine($"[red]Failed to create {fileName}[/]");
+                }
+                
 
             }
 
+            Console.WriteLine();
+            AnsiConsole.MarkupLine($"[white]Next file to be created[/] {Path.GetFileName(GenerateFiles.NextFileName())}");
+
+            AnsiConsole.MarkupLine("[cyan]Done[/]");
             Console.ReadLine();
         }
 

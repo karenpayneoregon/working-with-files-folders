@@ -1,5 +1,4 @@
-﻿using DirectoryHelpersLibrary.Extensions;
-using static System.IO.File;
+﻿using static System.IO.File;
 
 namespace DirectoryHelpersLibrary.Classes
 {
@@ -14,7 +13,11 @@ namespace DirectoryHelpersLibrary.Classes
         /// Base file name together with <see cref="_pattern"/>
         /// </summary>
         private static string _baseFileName => "Data";
+        /// <summary>
+        /// Base file extension
+        /// </summary>
         private static string _baseExtension => "json";
+
         /// <summary>
         /// Wrapper for <seealso cref="NextAvailableFilename"/> to obtain next available file name in a specific folder
         /// </summary>
@@ -23,7 +26,8 @@ namespace DirectoryHelpersLibrary.Classes
         /// Path is set to main assembly location with a base name of Import.txt
         /// </remarks>
         public static string NextFileName()
-            => NextAvailableFilename(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{_baseFileName}.{_baseExtension}"));
+            => NextAvailableFilename(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{_baseFileName}.{_baseExtension}"));
 
         /// <summary>
         /// Wrapper for <see cref="GetNextFilename"/>
@@ -33,7 +37,7 @@ namespace DirectoryHelpersLibrary.Classes
         public static string NextAvailableFilename(string path)
         {
 
-            if (!Exists(path) && Path.GetFileName(path).All(char.IsLetter))
+            if (!Exists(path) && Path.GetFileName(path)!.All(char.IsLetter))
             {
                 return path;
             }
@@ -111,17 +115,17 @@ namespace DirectoryHelpersLibrary.Classes
             => new(input.Where(char.IsDigit).ToArray());
 
         /// <summary>
-        /// Get all log files
+        /// Get all files
         /// </summary>
         private static string[] Files
             => Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory,
-                $"{_baseFileName}*._baseExtension");
+                $"{_baseFileName}*.{_baseExtension}");
 
         /// <summary>
-        /// Get last log file by int value
+        /// Get last file by int value
         /// </summary>
-        /// <returns>Last log file</returns>
-        public static string? GetLast()
+        /// <returns>Last  file</returns>
+        public static string GetLast()
         {
             var result = Files
                 .Select(file => new
