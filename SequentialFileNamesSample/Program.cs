@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using SequentialFileNamesSample.Classes;
+using DirectoryHelpersLibrary.Classes;
 using Spectre.Console;
 
 namespace SequentialFileNamesSample
@@ -9,37 +9,24 @@ namespace SequentialFileNamesSample
         static void Main(string[] args)
         {
 
-            
-            if (!string.IsNullOrWhiteSpace(Path.GetFileName(Operations.GetLast())))
+            // if there are any files show the last one created
+            if (GenerateFiles.HasAnyFiles())
             {
-                AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(Operations.GetLast())}[/]");
+                AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
             }
 
+            AnsiConsole.MarkupLine("[white on blue]Create 1 file[/]");
+            GenerateFiles.Create();
             AnsiConsole.MarkupLine("[white on blue]Create 4 files[/]");
-            Run();
-            AnsiConsole.MarkupLine("[white on blue]Create 8 files[/]");
-            Run(8);
+            GenerateFiles.Create(4);
 
             // get last file
-            AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(Operations.GetLast())}[/]");
+            AnsiConsole.MarkupLine($"[cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
 
             Console.ReadLine();
         }
 
-        private static void Run(int count = 4)
-        {
-            for (int index = 0; index < count; index++)
-            {
-                File.WriteAllText(Operations.NextFileName(), "");
-            }
 
-            Directory.GetFiles(".", "*.txt")
-                .ToList()
-                .Select(item => new { FileName = Path.GetFileName(item), Index = item.SqueezeInt() })
-                .OrderBy(anonymous => anonymous.Index)
-                .ToList()
-                .ForEach(x => Console.WriteLine(x.FileName));
-        }
 
         [ModuleInitializer]
         public static void Init()

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace SequentialFileNamesSample.Classes;
+namespace DirectoryHelpersLibrary.Extensions;
 public static class StringExtensions
 {
     public static int SqueezeInt(this string sender) 

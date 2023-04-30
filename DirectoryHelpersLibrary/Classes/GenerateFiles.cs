@@ -1,8 +1,9 @@
-﻿using static System.IO.File;
+﻿using DirectoryHelpersLibrary.Extensions;
+using static System.IO.File;
 
-namespace SequentialFileNamesSample.Classes
+namespace DirectoryHelpersLibrary.Classes
 {
-    public class Operations
+    public class GenerateFiles
     {
 
         /// <summary>
@@ -87,7 +88,20 @@ namespace SequentialFileNamesSample.Classes
 
             return string.Format(pattern, max);
         }
+        public static void Create(int count = 1)
+        {
+            for (int index = 0; index < count; index++)
+            {
+                File.WriteAllText(GenerateFiles.NextFileName(), "");
+            }
 
+            Directory.GetFiles(".", "*.txt")
+                .ToList()
+                .Select(item => new { FileName = Path.GetFileName(item), Index = item.SqueezeInt() })
+                .OrderBy(anonymous => anonymous.Index)
+                .ToList()
+                .ForEach(x => Console.WriteLine(x.FileName));
+        }
         /// <summary>
         /// Strip characters from string
         /// </summary>
