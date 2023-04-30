@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using DirectoryHelpersLibrary.Classes;
 using SequentialFileNamesSample.Classes;
 using Spectre.Console;
-using DateOnlyConverter = DirectoryHelpersLibrary.Classes.DateOnlyConverter;
-using TimeOnlyConverter = DirectoryHelpersLibrary.Classes.TimeOnlyConverter;
 
 
 namespace SequentialFileNamesSample
@@ -15,15 +11,9 @@ namespace SequentialFileNamesSample
     {
         static void Main(string[] args)
         {
-
-            if (GenerateFiles.HasAnyFiles())
-            {
-                AnsiConsole.MarkupLine($"Last file [cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]");
-            }
-            else
-            {
-                AnsiConsole.MarkupLine("[cyan]No files yet[/]");
-            }
+            AnsiConsole.MarkupLine(GenerateFiles.HasAnyFiles()
+                ? $"Last file [cyan]{Path.GetFileName(GenerateFiles.GetLast())}[/]"
+                : "[cyan]No files yet[/]");
 
             JsonSerializerOptions options = JsonSerializerOptions();
             AnsiConsole.MarkupLine("[white on blue]Create files[/]");
