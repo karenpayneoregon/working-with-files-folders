@@ -38,11 +38,35 @@ public static class DirectoryHelper
     /// <returns></returns>
     public static string UpOneLevel(string sender) 
         => UpperFolder(Path.GetDirectoryName(sender), 1);
-
+    
     /// <summary>
-    /// From project folder, get the solution folder path
+    /// Get information for the current solution folder
     /// </summary>
-    /// <returns>folder name</returns>
-    public static string SolutionFolder()
-        => AppDomain.CurrentDomain.BaseDirectory.UpperFolder(5);
+    /// <param name="path">Do not pass</param>
+    public static DirectoryInfo GetSolutionInfo(string path = null)
+    {
+        DirectoryInfo directory = new(path ?? Directory.GetCurrentDirectory());
+        while (directory is not null && directory.GetFiles("*.sln").Length == 0)
+        {
+            directory = directory.Parent;
+        }
+
+        return directory;
+
+    }
+    /// <summary>
+    /// Get information for the current project folder
+    /// </summary>
+    /// <param name="path">Do not pass</param>
+    public static DirectoryInfo GetProjectInfo(string path = null)
+    {
+        DirectoryInfo directory = new(path ?? Directory.GetCurrentDirectory());
+        while (directory is not null && directory.GetFiles("*.csproj").Length == 0)
+        {
+            directory = directory.Parent;
+        }
+
+        return directory;
+
+    }
 }

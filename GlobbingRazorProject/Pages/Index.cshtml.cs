@@ -22,7 +22,7 @@ public class IndexModel : PageModel
 
     public async Task<PageResult> OnPost()
     {
-        string path = DirectoryHelper.SolutionFolder();
+        string path = DirectoryHelper.GetSolutionInfo().FullName;
 
         string[] include = { "**/*.cs", "**/*.cshtml" };
         string[] exclude =

@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobbingRazorProject", "Glo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequentialFileNamesSample", "SequentialFileNamesSample\SequentialFileNamesSample.csproj", "{879C5551-542A-447A-99C6-F780143C583A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetFilesWithGlobApp", "GetFilesWithGlobApp\GetFilesWithGlobApp.csproj", "{F8B97EEA-50D0-48C3-A7D3-BF58651F1FDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{879C5551-542A-447A-99C6-F780143C583A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{879C5551-542A-447A-99C6-F780143C583A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{879C5551-542A-447A-99C6-F780143C583A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B97EEA-50D0-48C3-A7D3-BF58651F1FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B97EEA-50D0-48C3-A7D3-BF58651F1FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B97EEA-50D0-48C3-A7D3-BF58651F1FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B97EEA-50D0-48C3-A7D3-BF58651F1FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{E89CF275-9112-462C-B12E-FF618FB9B669} = {0A9DD6A2-2213-4DFD-B137-154CE83A3C1B}
 		{C9D435C6-8780-4769-939B-B1F4F7B405BC} = {71969C44-89D7-44AD-B412-5BBF7B6A71B1}
 		{879C5551-542A-447A-99C6-F780143C583A} = {71969C44-89D7-44AD-B412-5BBF7B6A71B1}
+		{F8B97EEA-50D0-48C3-A7D3-BF58651F1FDA} = {71969C44-89D7-44AD-B412-5BBF7B6A71B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34CA4DAE-1AEA-4495-8630-0812D81945D5}
