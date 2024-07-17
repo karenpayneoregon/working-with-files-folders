@@ -9,16 +9,16 @@ internal partial class Program
     static async Task Main(string[] args)
     {
         // what to include in the search
-        string[] include = { "**/Date*.cs", "**/Time*.cs", "**/ex*.cs", "**/*.md" };
+        string[] include = ["**/Date*.cs", "**/Time*.cs", "**/ex*.cs", "**/*.md"];
         // exclude these from the search
         string[] exclude =
-        {
+        [
             "**/*lic*.md",
             "**/*.AssemblyInfo.cs",
             "**/*.AssemblyAttributes.cs",
             "**/*.RazorAssemblyInfo.cs",
             "**/*.g.cs"
-        };
+        ];
 
         GlobbingOperations.TraverseFileMatch += DirectoryHelpers_TraverseFileMatch;
         GlobbingOperations.Done += DirectoryHelpers_Done;

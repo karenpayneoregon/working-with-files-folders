@@ -10,7 +10,6 @@ public class GlobbingOperations
     /// Informs listener of a <see cref="FileMatchItem"/>
     /// </summary>
     public static event OnTraverseFileMatch TraverseFileMatch;
-
     public delegate void OnDone(string message);
     /// <summary>
     /// Indicates processing has completed
@@ -39,9 +38,27 @@ public class GlobbingOperations
             }
         });
 
-        Done?.Invoke("Finished - see log file");
+        Done?.Invoke("Finished");
 
     }
 
+    public static async Task GetImages(string parentFolder, string[] patterns, string[] excludePatterns)
+    {
 
+        Matcher matcher = new();
+        matcher.AddIncludePatterns(patterns);
+        matcher.AddExcludePatterns(excludePatterns);
+        
+        await Task.Run(() =>
+        {
+
+            foreach (string file in matcher.GetResultsInFullPath(parentFolder))
+            {
+                TraverseFileMatch?.Invoke(new FileMatchItem(file));
+            }
+        });
+
+        Done?.Invoke("Finished");
+
+    }
 }
