@@ -35,7 +35,11 @@ public partial class MainForm : Form
     private void DirectoryHelpers_TraverseFileMatch(FileMatchItem sender)
     {
         var item = new FileItem() { Folder = sender.Folder, FileName = sender.FileName };
-        item.Bytes = File.ReadAllBytes(Path.Combine(item.Folder,item.FileName));
+        var fileName = Path.Combine(item.Folder, item.FileName);
+        item.Bytes = File.ReadAllBytes(fileName);
+        var info = new FileInfo(fileName);
+        item.Size = info.Length;
+        item.CreationTime = File.GetCreationTime(fileName);
         _files.Add(item);
     }
     private void DirectoryHelpers_Done(string message)

@@ -11,6 +11,8 @@ public class FileItem
     [Browsable(false)]
     public byte[] Bytes { get; set; }
     public Image Image => Bytes.BytesToImage();
+    public long Size { get; set; }
+    public DateTime CreationTime { get; set; }
     public override string ToString() => Path.Combine(Folder, FileName);
 
 }
