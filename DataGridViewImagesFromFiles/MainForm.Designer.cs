@@ -40,18 +40,18 @@ partial class MainForm
         dataGridView1.Name = "dataGridView1";
         dataGridView1.RowHeadersWidth = 51;
         dataGridView1.RowTemplate.Height = 100;
-        dataGridView1.Size = new Size(800, 510);
+        dataGridView1.Size = new Size(582, 510);
         dataGridView1.TabIndex = 0;
         // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 510);
+        ClientSize = new Size(582, 510);
         Controls.Add(dataGridView1);
         Name = "MainForm";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Form1";
+        Text = "Globbing";
         ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
         ResumeLayout(false);
     }
