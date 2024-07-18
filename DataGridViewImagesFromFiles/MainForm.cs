@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using DataGridViewImagesFromFiles.Classes;
 using DataGridViewImagesFromFiles.Models;
 using DirectoryHelpersLibrary.Classes;
@@ -42,7 +41,5 @@ public partial class MainForm : Form
     private void DirectoryHelpers_Done(string message)
     {
         _files = _files.OrderBy(x => x.FileName).ToList();
-        
-        
     }
 }

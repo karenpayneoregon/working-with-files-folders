@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace DataGridViewImagesFromFiles.Classes;
 
@@ -12,10 +11,7 @@ public static class DataGridViewExtensions
         foreach (DataGridViewColumn col in source.Columns)
         {
             if (col.ValueType.Name == "ICollection`1") continue;
-            if (col.DataPropertyName == "Image")
-            {
-                continue;
-            }
+            if (col.DataPropertyName == "Image") continue;
             col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
         }
 
@@ -30,8 +26,6 @@ public static class DataGridViewExtensions
             }
             int columnWidth = source.Columns[index].Width;
             source.Columns[index].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
-            // Set Width to calculated AutoSize value:
             source.Columns[index].Width = columnWidth;
         }
     }
