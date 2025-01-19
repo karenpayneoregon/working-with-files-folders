@@ -6,7 +6,7 @@ public static partial class Extensions
 {
     public static IEnumerable<T> NaturalOrderBy<T>(this IEnumerable<T> items, Func<T, string> selector, StringComparer stringComparer = null)
     {
-        var regex = new Regex(@"\d+", RegexOptions.Compiled);
+        var regex = DigitsRegex();
 
         int maxDigits = items
             .SelectMany(value => regex.Matches(selector(value))
@@ -27,4 +27,6 @@ public static partial class Extensions
 
     [GeneratedRegex(@"\d+")]
     private static partial Regex NumbersRegex();
+    [GeneratedRegex(@"\d+", RegexOptions.Compiled)]
+    private static partial Regex DigitsRegex();
 }
