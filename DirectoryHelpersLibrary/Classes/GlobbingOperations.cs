@@ -61,4 +61,12 @@ public class GlobbingOperations
         Done?.Invoke("Finished");
 
     }
+    public static async Task<Func<List<string>>> GetImagesMatcher(MatcherParameters mp)
+    {
+        Matcher matcher = new();
+        matcher.AddIncludePatterns(mp.Patterns);
+        matcher.AddExcludePatterns(mp.ExcludePatterns);
+
+        return await Task.FromResult(() => matcher.GetResultsInFullPath(mp.ParentFolder).ToList());
+    }
 }

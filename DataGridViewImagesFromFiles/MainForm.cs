@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using DataGridViewImagesFromFiles.Classes;
 using DataGridViewImagesFromFiles.Models;
 using DirectoryHelpersLibrary.Classes;
@@ -22,11 +23,25 @@ public partial class MainForm : Form
 
         if (!Directory.Exists(folder))
             return;
-        
+
         GlobbingOperations.TraverseFileMatch += DirectoryHelpers_TraverseFileMatch;
         GlobbingOperations.Done += DirectoryHelpers_Done;
-        await GlobbingOperations.GetImages(folder, include,exclude);
-        
+        await GlobbingOperations.GetImages(folder, include, exclude);
+
+        MatcherParameters matcherParameters = new()
+        {
+            Patterns = include,
+            ExcludePatterns = exclude,
+            ParentFolder = folder
+        };
+
+        var imageNames = await Globbing.GetImagesNamesAsync(matcherParameters).ConfigureAwait(false);
+
+        foreach (var image in imageNames())
+        {
+            Debug.WriteLine(image);
+        }
+
         dataGridView1.DataSource = _files;
         dataGridView1.FixHeaders();
         dataGridView1.ExpandColumns();

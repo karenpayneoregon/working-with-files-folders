@@ -29,4 +29,5 @@ public static partial class Extensions
     private static partial Regex NumbersRegex();
     [GeneratedRegex(@"\d+", RegexOptions.Compiled)]
     private static partial Regex DigitsRegex();
+
 }
