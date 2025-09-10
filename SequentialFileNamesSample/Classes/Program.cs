@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using DirectoryHelpersLibrary.Classes;
 
+// ReSharper disable once CheckNamespace
 namespace SequentialFileNamesSample;
 internal partial class Program
 {

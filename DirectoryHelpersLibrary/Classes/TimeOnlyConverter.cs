@@ -14,7 +14,7 @@ public class TimeOnlyConverter : JsonConverter<TimeOnly>
     {
     }
 
-    public TimeOnlyConverter(string? serializationFormat)
+    public TimeOnlyConverter(string serializationFormat)
     {
         _serializationFormat = serializationFormat ?? "HH:mm:ss.fff";
     }
