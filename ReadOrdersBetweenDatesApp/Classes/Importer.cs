@@ -30,12 +30,39 @@ public class Importer
                 continue;
             }
 
+            // validate data types before parsing
+            if (!int.TryParse(columns[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int orderId))
+            {
+                badLineNumbers.Add(Index);
+                continue;
+            }
+
+            if (!DateOnly.TryParse(columns[1], CultureInfo.InvariantCulture, out DateOnly orderDate))
+            {
+                badLineNumbers.Add(Index);
+                continue;
+            }
+
+            if (!DateOnly.TryParse(columns[2], CultureInfo.InvariantCulture, out DateOnly requiredDate))
+            {
+                badLineNumbers.Add(Index);
+                continue;
+            }
+            
+            // Try parsing ShippedDate, allowing for potential null or invalid date entries
+            if (!DateOnly.TryParse(columns[3], CultureInfo.InvariantCulture, out DateOnly shippedDate))
+            {
+                badLineNumbers.Add(Index);
+                continue;
+            }
+
+            
             var order = new OrdersResults
             {
-                OrderID = int.Parse(columns[0], CultureInfo.InvariantCulture),
-                OrderDate = DateOnly.Parse(columns[1], CultureInfo.InvariantCulture),
-                RequiredDate = DateOnly.Parse(columns[2], CultureInfo.InvariantCulture),
-                ShippedDate = DateOnly.Parse(columns[3], CultureInfo.InvariantCulture),
+                OrderID = orderId,
+                OrderDate = orderDate,
+                RequiredDate = requiredDate,
+                ShippedDate = shippedDate,
                 ShipAddress = columns[4],
                 ShipCity = columns[5],
                 ShipPostalCode = columns[6],
@@ -46,6 +73,6 @@ public class Importer
             results.Add(order);
         }
 
-        return (results, badLineNumbers);
+        return (results, badLineNumbers.Distinct().ToList());
     }
 }

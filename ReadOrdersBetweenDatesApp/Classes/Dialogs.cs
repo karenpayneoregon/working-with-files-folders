@@ -23,7 +23,7 @@ internal class Dialogs
             Caption = "Information",
             SizeToContent = true,
             Heading = heading,
-            Icon = TaskDialogIcon.Information,
+            Icon = new TaskDialogIcon(Properties.Resources.exclamation24),
             Buttons = [okayButton]
         };
 
