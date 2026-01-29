@@ -28,18 +28,62 @@ partial class MainForm
     /// </summary>
     private void InitializeComponent()
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+        BindingNavigator1 = new ReadOrdersBetweenDatesApp.Controls.CoreBindingNavigator();
+        panel1 = new Panel();
+        dataGridView1 = new DataGridView();
+        (BindingNavigator1).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
         SuspendLayout();
         // 
-        // Form1
+        // BindingNavigator1
+        // 
+        BindingNavigator1.ImageScalingSize = new Size(20, 20);
+        BindingNavigator1.Location = new Point(0, 0);
+        BindingNavigator1.Name = "BindingNavigator1";
+        BindingNavigator1.Size = new Size(1497, 27);
+        BindingNavigator1.TabIndex = 0;
+        BindingNavigator1.Text = "coreBindingNavigator1";
+        // 
+        // panel1
+        // 
+        panel1.Dock = DockStyle.Bottom;
+        panel1.Location = new Point(0, 396);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(1497, 54);
+        panel1.TabIndex = 1;
+        // 
+        // dataGridView1
+        // 
+        dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridView1.Dock = DockStyle.Fill;
+        dataGridView1.Location = new Point(0, 27);
+        dataGridView1.Name = "dataGridView1";
+        dataGridView1.RowHeadersWidth = 51;
+        dataGridView1.Size = new Size(1497, 369);
+        dataGridView1.TabIndex = 2;
+        // 
+        // MainForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
-        Name = "Form1";
+        ClientSize = new Size(1497, 450);
+        Controls.Add(dataGridView1);
+        Controls.Add(panel1);
+        Controls.Add(BindingNavigator1);
+        Icon = (Icon)resources.GetObject("$this.Icon");
+        Name = "MainForm";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Form1";
+        Text = "Working with files and databases";
+        (BindingNavigator1).EndInit();
+        ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
+
+    private Controls.CoreBindingNavigator BindingNavigator1;
+    private Panel panel1;
+    private DataGridView dataGridView1;
 }

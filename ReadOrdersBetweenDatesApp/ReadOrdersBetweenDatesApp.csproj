@@ -14,12 +14,13 @@
 
 	<ItemGroup>
 		<PackageReference Include="ConfigurationLibrary" Version="1.0.6" />
-		<PackageReference Include="ConsoleConfigurationLibrary" Version="1.0.0.2" />
+		<PackageReference Include="ConsoleConfigurationLibrary" Version="1.0.0.12" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dapper" Version="2.1.35" />
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+		<PackageReference Include="Dapper" Version="2.1.66" />
+		<PackageReference Include="kp.Dapper.Handlers" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
 	</ItemGroup>
 
 

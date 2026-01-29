@@ -27,9 +27,6 @@ public class Importer
     /// </item>
     /// </list>
     /// </returns>
-    /// <exception cref="FileNotFoundException">
-    /// Thrown when the specified file does not exist.
-    /// </exception>
     /// <remarks>
     /// The method validates the structure and data types of each row in the CSV file. Rows with missing or invalid data
     /// are skipped, and their line numbers are recorded in the returned list of invalid entries.
@@ -37,7 +34,7 @@ public class Importer
     /// Optionally wrap the file reading and parsing logic in try-catch blocks to handle potential IO exceptions
     /// or parsing errors more gracefully.
     /// </remarks>
-    public static (List<OrdersResults> validOrders, List<int> badLineNumbers) Import(string filePath = "data.csv")
+    public static (List<OrdersResults> validOrders, List<int> badLineNumbers) Execute(string filePath = "output.csv")
     {
         List<int> badLineNumbers = [];
         
@@ -45,6 +42,7 @@ public class Importer
             throw new FileNotFoundException($"File not found: {filePath}");
 
         var results = new List<OrdersResults>();
+        
         var lines = File.ReadAllLines(filePath);
 
         foreach ((int Index, string line) in lines.Index())
@@ -68,20 +66,20 @@ public class Importer
                 continue;
             }
 
-            if (!DateOnly.TryParse(columns[1], CultureInfo.InvariantCulture, out DateOnly orderDate))
+            if (!DateOnly.TryParse(columns[1], CultureInfo.InvariantCulture, out var orderDate))
             {
                 badLineNumbers.Add(Index);
                 continue;
             }
 
-            if (!DateOnly.TryParse(columns[2], CultureInfo.InvariantCulture, out DateOnly requiredDate))
+            if (!DateOnly.TryParse(columns[2], CultureInfo.InvariantCulture, out var requiredDate))
             {
                 badLineNumbers.Add(Index);
                 continue;
             }
             
             // Try parsing ShippedDate, allowing for potential null or invalid date entries
-            if (!DateOnly.TryParse(columns[3], CultureInfo.InvariantCulture, out DateOnly shippedDate))
+            if (!DateOnly.TryParse(columns[3], CultureInfo.InvariantCulture, out var shippedDate))
             {
                 badLineNumbers.Add(Index);
                 continue;
