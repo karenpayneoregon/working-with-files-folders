@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ReadOrdersBetweenDatesApp.Classes
+namespace ReadOrdersBetweenDatesApp.Components
 {
 
     /// <summary>
@@ -10,7 +10,7 @@ namespace ReadOrdersBetweenDatesApp.Classes
     /// The type of elements in the list. Must be a reference type.
     /// </typeparam>
     /// <remarks>
-    /// This class extends <see cref="System.ComponentModel.BindingList{T}"/> to provide sorting functionality.
+    /// This class extends <see cref="BindingList{T}"/> to provide sorting functionality.
     /// </remarks>
     public class SortableBindingList<T> : BindingList<T> where T : class
     {
@@ -110,7 +110,7 @@ namespace ReadOrdersBetweenDatesApp.Classes
             object rhsValue = rhs == null ? null : _sortProperty.GetValue(rhs);
             if (lhsValue == null)
             {
-                return (rhsValue == null) ? 0 : -1; //nulls are equal
+                return rhsValue == null ? 0 : -1; //nulls are equal
             }
             if (rhsValue == null)
             {

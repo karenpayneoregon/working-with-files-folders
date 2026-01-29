@@ -48,9 +48,27 @@ public static class OrdersCsvExporter
         }
     }
 
+    /// <summary>
+    /// Formats a <see cref="DateOnly"/> value as a string in the "yyyy-MM-dd" format.
+    /// </summary>
+    /// <param name="date">The <see cref="DateOnly"/> value to format.</param>
+    /// <returns>
+    /// A string representation of the date in "yyyy-MM-dd" format, or an empty string
+    /// if the date is the default value.
+    /// </returns>
     private static string FormatDate(DateOnly date)
         => date == default ? string.Empty : date.ToString("yyyy-MM-dd");
 
+    /// <summary>
+    /// Escapes a string for safe inclusion in a CSV file.
+    /// </summary>
+    /// <param name="value">The string value to escape. Can be <c>null</c> or empty.</param>
+    /// <returns>
+    /// A properly escaped string suitable for CSV formatting. If the input is <c>null</c> 
+    /// or consists only of whitespace, an empty string is returned. If the input contains 
+    /// special characters such as double quotes, commas, or newlines, it is escaped 
+    /// according to CSV standards.
+    /// </returns>
     private static string Escape(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))

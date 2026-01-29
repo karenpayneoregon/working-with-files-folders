@@ -1,5 +1,6 @@
 
 using ReadOrdersBetweenDatesApp.Classes;
+using ReadOrdersBetweenDatesApp.Components;
 using ReadOrdersBetweenDatesApp.Models;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -32,11 +33,12 @@ public partial class MainForm : Form
     private void CurrentItemButton_Click(object? sender, EventArgs e)
     {
         var current = _ordersBindingSource.Current as OrdersResults;
+        Dialogs.Information(this, $"{current!.OrderID} {current.CompanyName}");
     }
 
     private void AboutItemButton_Click(object? sender, EventArgs e)
     {
-        Dialogs.Information(BindingNavigator1,"Shows creating a CSV file and reading the orders from the file.");
+        Dialogs.Information(this,"Shows creating a CSV file and reading the orders from the file.");
     }
 
     /// <summary>
@@ -64,8 +66,11 @@ public partial class MainForm : Form
 
         _ordersResults = new SortableBindingList<OrdersResults>(validOrders);
         _ordersBindingSource.DataSource = _ordersResults;
+        
         BindingNavigator1.BindingSource = _ordersBindingSource;
         dataGridView1.DataSource = _ordersBindingSource;
+        
         dataGridView1.ExpandColumns();
+        
     }
 }

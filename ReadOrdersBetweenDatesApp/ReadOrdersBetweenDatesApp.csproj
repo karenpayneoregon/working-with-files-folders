@@ -23,6 +23,12 @@
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Serilog" Version="4.3.0" />
+		<PackageReference Include="SeriLogThemesLibrary" Version="1.0.0.2" />
+		<PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+	</ItemGroup>
 
 	<!--<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="11.9.0" />

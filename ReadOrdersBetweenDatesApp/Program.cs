@@ -21,6 +21,9 @@ internal static class Program
     /// </summary>
     private static async Task Setup()
     {
+        
+        SetupLogging.Development();
+        
         var services = Classes.Configuration.ApplicationConfiguration.ConfigureServices();
         await using var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<SetupServices>()!.GetConnectionStrings();
