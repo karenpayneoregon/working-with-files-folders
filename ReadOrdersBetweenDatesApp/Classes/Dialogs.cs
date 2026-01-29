@@ -24,6 +24,7 @@ internal class Dialogs
             SizeToContent = true,
             Heading = heading,
             Icon = new TaskDialogIcon(Properties.Resources.exclamation24),
+            Footnote = new TaskDialogFootnote() { Text = "Code sample by Karen Payne" },
             Buttons = [okayButton]
         };
 
