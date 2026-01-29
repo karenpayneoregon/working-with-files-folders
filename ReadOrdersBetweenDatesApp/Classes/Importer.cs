@@ -6,6 +6,37 @@ namespace ReadOrdersBetweenDatesApp.Classes;
 
 public class Importer
 {
+    /// <summary>
+    /// Imports orders from a CSV file and returns the valid orders along with the line numbers of invalid entries.
+    /// </summary>
+    /// <param name="filePath">
+    /// The path to the CSV file to import. Defaults to "data.csv" if not specified.
+    /// </param>
+    /// <returns>
+    /// A tuple containing:
+    /// <list type="bullet">
+    /// <item>
+    /// <description>
+    /// <see cref="List{T}"/> of <see cref="OrdersResults"/> representing the valid orders.
+    /// </description>
+    /// </item>
+    /// <item>
+    /// <description>
+    /// <see cref="List{T}"/> of <see cref="int"/> representing the line numbers of invalid entries in the CSV file.
+    /// </description>
+    /// </item>
+    /// </list>
+    /// </returns>
+    /// <exception cref="FileNotFoundException">
+    /// Thrown when the specified file does not exist.
+    /// </exception>
+    /// <remarks>
+    /// The method validates the structure and data types of each row in the CSV file. Rows with missing or invalid data
+    /// are skipped, and their line numbers are recorded in the returned list of invalid entries.
+    ///
+    /// Optionally wrap the file reading and parsing logic in try-catch blocks to handle potential IO exceptions
+    /// or parsing errors more gracefully.
+    /// </remarks>
     public static (List<OrdersResults> validOrders, List<int> badLineNumbers) Import(string filePath = "data.csv")
     {
         List<int> badLineNumbers = [];
