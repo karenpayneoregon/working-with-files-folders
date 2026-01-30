@@ -32,7 +32,9 @@ partial class MainForm
         BindingNavigator1 = new ReadOrdersBetweenDatesApp.Controls.CoreBindingNavigator();
         panel1 = new Panel();
         dataGridView1 = new DataGridView();
+        ExitAppButton = new Button();
         (BindingNavigator1).BeginInit();
+        panel1.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
         SuspendLayout();
         // 
@@ -47,6 +49,7 @@ partial class MainForm
         // 
         // panel1
         // 
+        panel1.Controls.Add(ExitAppButton);
         panel1.Dock = DockStyle.Bottom;
         panel1.Location = new Point(0, 396);
         panel1.Name = "panel1";
@@ -63,6 +66,17 @@ partial class MainForm
         dataGridView1.Size = new Size(1497, 369);
         dataGridView1.TabIndex = 2;
         // 
+        // ExitAppButton
+        // 
+        ExitAppButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        ExitAppButton.Location = new Point(1391, 13);
+        ExitAppButton.Name = "ExitAppButton";
+        ExitAppButton.Size = new Size(94, 29);
+        ExitAppButton.TabIndex = 0;
+        ExitAppButton.Text = "Exit";
+        ExitAppButton.UseVisualStyleBackColor = true;
+        ExitAppButton.Click += ExitAppButton_Click;
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -76,6 +90,7 @@ partial class MainForm
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Working with files and databases";
         (BindingNavigator1).EndInit();
+        panel1.ResumeLayout(false);
         ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
         ResumeLayout(false);
         PerformLayout();
@@ -86,4 +101,5 @@ partial class MainForm
     private Controls.CoreBindingNavigator BindingNavigator1;
     private Panel panel1;
     private DataGridView dataGridView1;
+    private Button ExitAppButton;
 }

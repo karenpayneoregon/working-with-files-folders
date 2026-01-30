@@ -5,6 +5,14 @@ using Serilog;
 
 namespace ReadOrdersBetweenDatesApp.Classes;
 
+/// <summary>
+/// Provides functionality to import orders from a CSV file, validate the data, and return the results.
+/// </summary>
+/// <remarks>
+/// This class is responsible for reading a CSV file, validating its contents, and returning the valid orders 
+/// along with the line numbers of invalid entries. It ensures that the data is processed efficiently and 
+/// handles potential issues such as missing or invalid data.
+/// </remarks>
 public class Importer
 {
     /// <summary>

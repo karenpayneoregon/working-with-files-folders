@@ -3,15 +3,14 @@ using ReadOrdersBetweenDatesApp.Classes;
 using ReadOrdersBetweenDatesApp.Classes.Configuration;
 using ReadOrdersBetweenDatesApp.Components;
 using ReadOrdersBetweenDatesApp.Models;
-using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace ReadOrdersBetweenDatesApp;
 
 public partial class MainForm : Form
 {
     private SortableBindingList<OrdersResults> _ordersResults;
-    private BindingSource _ordersBindingSource = new BindingSource();
+    private BindingSource _ordersBindingSource = new();
+
     public MainForm()
     {
         InitializeComponent();
@@ -20,20 +19,28 @@ public partial class MainForm : Form
 
     private void MainForm_Shown(object? sender, EventArgs e)
     {
-        
+
         dataGridView1.AllowUserToAddRows = false;
-        
+
         BindingNavigator1.AboutItemButton.Click += AboutItemButton_Click;
         BindingNavigator1.CurrentItemButton.Click += CurrentItemButton_Click;
-        
+
         //OrdersCsvExporter.ExportOrdersToCsv("output.csv");
-        
+
         if (!ImportOrders())
         {
             Dialogs.Information(this, "Cannot open the CSV file for reading.");
         }
     }
 
+    /// <summary>
+    /// Handles the click event for the "Current Item" button in the binding navigator.
+    /// </summary>
+    /// <remarks>
+    /// This method retrieves the currently selected order from the binding source and displays its 
+    /// <see cref="OrdersResults.OrderID"/> and <see cref="OrdersResults.CompanyName"/> in an informational dialog.
+    /// </remarks>
+    /// <seealso cref="Dialogs.Information(Control, string, string)"/>
     private void CurrentItemButton_Click(object? sender, EventArgs e)
     {
         var current = _ordersBindingSource.Current as OrdersResults;
@@ -42,7 +49,7 @@ public partial class MainForm : Form
 
     private void AboutItemButton_Click(object? sender, EventArgs e)
     {
-        Dialogs.Information(this,"Shows creating a CSV file and reading the orders from the file.");
+        Dialogs.Information(this, "Shows creating a CSV file and reading the orders from the file.");
     }
 
     /// <summary>
@@ -65,7 +72,7 @@ public partial class MainForm : Form
         }
 
         var (validOrders, badLineNumbers) = Importer.Execute(FileSettings.Instance.FileName);
-        
+
         var badLines = badLineNumbers.Count;
 
         if (badLines > 0)
@@ -75,13 +82,18 @@ public partial class MainForm : Form
 
         _ordersResults = new SortableBindingList<OrdersResults>(validOrders);
         _ordersBindingSource.DataSource = _ordersResults;
-        
+
         BindingNavigator1.BindingSource = _ordersBindingSource;
         dataGridView1.DataSource = _ordersBindingSource;
-        
+
         dataGridView1.ExpandColumns();
 
         return true;
 
+    }
+
+    private void ExitAppButton_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }
