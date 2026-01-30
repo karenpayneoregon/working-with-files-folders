@@ -3,6 +3,7 @@ using ReadOrdersBetweenDatesApp.Classes;
 using ReadOrdersBetweenDatesApp.Classes.Configuration;
 using ReadOrdersBetweenDatesApp.Components;
 using ReadOrdersBetweenDatesApp.Models;
+using System.ComponentModel;
 
 namespace ReadOrdersBetweenDatesApp;
 
@@ -31,6 +32,32 @@ public partial class MainForm : Form
         {
             Dialogs.Information(this, "Cannot open the CSV file for reading.");
         }
+        else
+        {
+            dataGridView1.DataError += DataGridView_DataError;
+            dataGridView1.CurrentCellDirtyStateChanged += DataGridView1_CurrentCellDirtyStateChanged;
+        }
+    }
+
+    /// <summary>
+    /// Handles the <see cref="DataGridView.CurrentCellDirtyStateChanged"/> event for the <see cref="dataGridView1"/> control.
+    /// </summary>
+    /// <remarks>
+    /// This method ensures that when the current cell in the first column of the <see cref="dataGridView1"/> becomes dirty,
+    /// the edit operation is committed immediately. This is particularly useful for handling changes in checkbox cells.
+    /// </remarks>
+    /// <seealso cref="DataGridView.CommitEdit(DataGridViewDataErrorContexts)"/>
+    private void DataGridView1_CurrentCellDirtyStateChanged(object? sender, EventArgs e)
+    {
+        if (dataGridView1.CurrentCell!.ColumnIndex == 0)
+        {
+            dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+    }
+
+    private void DataGridView_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+    {
+        e.Cancel = false;
     }
 
     /// <summary>
@@ -44,7 +71,7 @@ public partial class MainForm : Form
     private void CurrentItemButton_Click(object? sender, EventArgs e)
     {
         var current = _ordersBindingSource.Current as OrdersResults;
-        Dialogs.Information(this, $"{current!.OrderID} {current.CompanyName}");
+        Dialogs.Information(this, $"{current!.OrderID} {current.CompanyName} {current.Process}");
     }
 
     private void AboutItemButton_Click(object? sender, EventArgs e)
@@ -86,7 +113,9 @@ public partial class MainForm : Form
         BindingNavigator1.BindingSource = _ordersBindingSource;
         dataGridView1.DataSource = _ordersBindingSource;
 
+        DataGridViewCheckBoxColumn checkColumn = new DataGridViewCheckBoxColumn();
         dataGridView1.ExpandColumns();
+       
 
         return true;
 

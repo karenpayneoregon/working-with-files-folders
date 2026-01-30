@@ -97,6 +97,7 @@ public class Importer
             
             var order = new OrdersResults
             {
+                Process = false,
                 OrderID = orderId,
                 OrderDate = orderDate,
                 RequiredDate = requiredDate,
