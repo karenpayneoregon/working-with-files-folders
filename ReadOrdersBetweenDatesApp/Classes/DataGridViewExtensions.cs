@@ -24,9 +24,12 @@ public static class DataGridViewExtensions
             {
                 continue;
             }
+            
             int columnWidth = source.Columns[index].Width;
+            
             source.Columns[index].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            source.Columns[index].Width = columnWidth;
+            source.Columns[index].Width = columnWidth +20;
+            
         }
     }
     /// <summary>

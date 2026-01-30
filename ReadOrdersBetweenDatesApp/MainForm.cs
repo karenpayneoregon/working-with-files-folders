@@ -35,7 +35,7 @@ public partial class MainForm : Form
         else
         {
             dataGridView1.DataError += DataGridView_DataError;
-            dataGridView1.CurrentCellDirtyStateChanged += DataGridView1_CurrentCellDirtyStateChanged;
+            dataGridView1.CurrentCellDirtyStateChanged += DataGridView_CurrentCellDirtyStateChanged;
         }
     }
 
@@ -47,7 +47,7 @@ public partial class MainForm : Form
     /// the edit operation is committed immediately. This is particularly useful for handling changes in checkbox cells.
     /// </remarks>
     /// <seealso cref="DataGridView.CommitEdit(DataGridViewDataErrorContexts)"/>
-    private void DataGridView1_CurrentCellDirtyStateChanged(object? sender, EventArgs e)
+    private void DataGridView_CurrentCellDirtyStateChanged(object? sender, EventArgs e)
     {
         if (dataGridView1.CurrentCell!.ColumnIndex == 0)
         {
@@ -114,6 +114,7 @@ public partial class MainForm : Form
         dataGridView1.DataSource = _ordersBindingSource;
 
         DataGridViewCheckBoxColumn checkColumn = new DataGridViewCheckBoxColumn();
+        dataGridView1.FixHeaders();
         dataGridView1.ExpandColumns();
        
 
