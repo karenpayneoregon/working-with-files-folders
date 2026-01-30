@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using ReadOrdersBetweenDatesApp.Models;
+using Serilog;
 
 namespace ReadOrdersBetweenDatesApp.Classes;
 
@@ -100,6 +101,13 @@ public class Importer
             };
 
             results.Add(order);
+        }
+
+        badLineNumbers = badLineNumbers.Distinct().ToList();
+
+        if (badLineNumbers.Count >0)
+        {
+            Log.Information("Imported orders from {F} with {BL} bad lines.", filePath, string.Join(", ", badLineNumbers));
         }
 
         return (results, badLineNumbers.Distinct().ToList());

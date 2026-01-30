@@ -8,12 +8,12 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var items = new List<string>
-        {
+        List<string> items =
+        [
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LogFiles"),
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"),
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TextFile1.txt")
-        };
+        ];
 
         foreach (var item in items)
         {

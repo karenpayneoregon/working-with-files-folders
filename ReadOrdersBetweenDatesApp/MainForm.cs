@@ -1,5 +1,6 @@
 
 using ReadOrdersBetweenDatesApp.Classes;
+using ReadOrdersBetweenDatesApp.Classes.Configuration;
 using ReadOrdersBetweenDatesApp.Components;
 using ReadOrdersBetweenDatesApp.Models;
 using System.ComponentModel;
@@ -27,7 +28,10 @@ public partial class MainForm : Form
         
         //OrdersCsvExporter.ExportOrdersToCsv("output.csv");
         
-        ImportOrders();
+        if (!ImportOrders())
+        {
+            Dialogs.Information(this, "Cannot open the CSV file for reading.");
+        }
     }
 
     private void CurrentItemButton_Click(object? sender, EventArgs e)
@@ -53,9 +57,14 @@ public partial class MainForm : Form
     /// Thrown if the CSV file specified in the <see cref="Importer.Execute"/> method does not exist.
     /// </exception>
     /// <seealso cref="Importer.Execute"/>
-    private void ImportOrders()
+    private bool ImportOrders()
     {
-        var (validOrders, badLineNumbers) = Importer.Execute();
+        if (!FileAccessUtil.CanOpenTextFile(FileSettings.Instance.FileName))
+        {
+            return false;
+        }
+
+        var (validOrders, badLineNumbers) = Importer.Execute(FileSettings.Instance.FileName);
         
         var badLines = badLineNumbers.Count;
 
@@ -71,6 +80,8 @@ public partial class MainForm : Form
         dataGridView1.DataSource = _ordersBindingSource;
         
         dataGridView1.ExpandColumns();
-        
+
+        return true;
+
     }
 }

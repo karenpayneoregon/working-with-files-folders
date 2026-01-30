@@ -20,6 +20,9 @@ internal class ApplicationConfiguration
             services.Configure<EntityConfiguration>(Config.Configuration.JsonRoot()
                 .GetSection(nameof(EntityConfiguration)));
 
+            services.Configure<FileConfiguration>(Config.Configuration.JsonRoot()
+                .GetSection(nameof(FileConfiguration)));
+
             services.AddTransient<SetupServices>();
         }
 

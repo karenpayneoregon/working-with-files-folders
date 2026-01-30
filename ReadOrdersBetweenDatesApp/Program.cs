@@ -28,5 +28,6 @@ internal static class Program
         await using var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<SetupServices>()!.GetConnectionStrings();
         serviceProvider.GetService<SetupServices>()!.GetEntitySettings();
+        serviceProvider.GetService<SetupServices>()!.GetFileSettings();
     }
 }
