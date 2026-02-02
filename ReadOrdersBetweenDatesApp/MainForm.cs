@@ -1,15 +1,16 @@
-
 using ReadOrdersBetweenDatesApp.Classes;
 using ReadOrdersBetweenDatesApp.Classes.Configuration;
+using ReadOrdersBetweenDatesApp.Classes.Extensions;
 using ReadOrdersBetweenDatesApp.Components;
 using ReadOrdersBetweenDatesApp.Models;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace ReadOrdersBetweenDatesApp;
 
 public partial class MainForm : Form
 {
-    private SortableBindingList<OrdersResults> _ordersResults;
+    private SortableBindingList<OrdersResults> _ordersBindingList;
     private BindingSource _ordersBindingSource = new();
 
     public MainForm()
@@ -36,6 +37,42 @@ public partial class MainForm : Form
         {
             dataGridView1.DataError += DataGridView_DataError;
             dataGridView1.CurrentCellDirtyStateChanged += DataGridView_CurrentCellDirtyStateChanged;
+            dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+            //_ordersBindingList.ListChanged += OrdersResults_ListChanged;
+        }
+    }
+
+    private void DataGridView1_CellValueChanged(object? sender, DataGridViewCellEventArgs e)
+    {
+        if (e is { RowIndex: >= 0, ColumnIndex: >= 0 })
+        {
+            var dgv = sender as DataGridView;
+            if (dgv.Columns[e.ColumnIndex].Name != nameof(OrdersResults.Process)) return;
+            DataGridViewCell changedCell = dgv.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                
+            /*
+            * 
+            */
+            if (changedCell.Value is bool processValue && _ordersBindingSource.Current is OrdersResults current)
+            {
+                current.Process = processValue;
+            }
+        }
+    }
+
+    private void OrdersResults_ListChanged(object? sender, ListChangedEventArgs e)
+    {
+        if (e.ListChangedType == ListChangedType.ItemChanged)
+        {
+            var changedItem = _ordersBindingList[e.OldIndex];
+        }
+        else if (e.ListChangedType == ListChangedType.ItemAdded)
+        {
+            // do something
+        }
+        else if (e.ListChangedType == ListChangedType.ItemDeleted)
+        {
+            // do something
         }
     }
 
@@ -52,6 +89,7 @@ public partial class MainForm : Form
         if (dataGridView1.CurrentCell!.ColumnIndex == 0)
         {
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            var current = _ordersBindingSource.GetCurrentOrder();
         }
     }
 
@@ -70,7 +108,7 @@ public partial class MainForm : Form
     /// <seealso cref="Dialogs.Information(Control, string, string)"/>
     private void CurrentItemButton_Click(object? sender, EventArgs e)
     {
-        var current = _ordersBindingSource.Current as OrdersResults;
+        var current = _ordersBindingSource.GetCurrentOrder();
         Dialogs.Information(this, $"{current!.OrderID} {current.CompanyName} {current.Process}");
     }
 
@@ -107,8 +145,8 @@ public partial class MainForm : Form
             Dialogs.Information(this, $"Found {badLines} bad lines in the CSV file.");
         }
 
-        _ordersResults = new SortableBindingList<OrdersResults>(validOrders);
-        _ordersBindingSource.DataSource = _ordersResults;
+        _ordersBindingList = new SortableBindingList<OrdersResults>(validOrders);
+        _ordersBindingSource.DataSource = _ordersBindingList;
 
         BindingNavigator1.BindingSource = _ordersBindingSource;
         dataGridView1.DataSource = _ordersBindingSource;

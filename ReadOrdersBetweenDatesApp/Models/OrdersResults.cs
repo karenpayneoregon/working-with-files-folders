@@ -4,7 +4,8 @@ using System.Runtime.CompilerServices;
 namespace ReadOrdersBetweenDatesApp.Models;
 public class OrdersResults : INotifyPropertyChanged
 {
-    public bool Process { get; set => SetField(ref field, value); }
+    private bool _process;
+    public bool Process { get => _process; set => SetField(ref _process, value); }
     public int OrderID { get; set; }
 
     public DateOnly OrderDate { get; set; }
